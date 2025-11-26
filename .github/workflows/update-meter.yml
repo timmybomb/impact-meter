@@ -8,15 +8,20 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+
+      # 1. Checkout using your token
       - name: Checkout repo
         uses: actions/checkout@v3
         with:
           token: ${{ secrets.GH_TOKEN }}
 
+      # 2. Fetch data from Google Apps Script
       - name: Fetch data from Google Apps Script
         run: |
-          curl -s "https://script.google.com/macros/s/AKfycbDYcRc67iGbVU_jYfL5iEwpemWUy2UvM0WlHAvmKc5DTj51ThpeHLce_uo748cSOSKoA/exec" -o data.json
+          curl -s "https://script.google.com/macros/s/AKfycbyDYcRc67iGbVU_jYfL5iEwpemWUy2UvM0WlHAvmKc5DTj51ThpeHLce_u0748cSOSKoA/exec" \
+            -o data.json
 
+      # 3. Commit & push
       - name: Commit and push
         run: |
           git config user.name "Impact Meter Bot"
