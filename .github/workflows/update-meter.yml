@@ -1,29 +1,28 @@
 name: Update Impact Meter
 
 on:
-  schedule:
-    - cron: "*/15 * * * *"  # runs every 15 minutes
-  workflow_dispatch:        # allows manual run
+  workflow_dispatch:
 
 jobs:
-  update-meter:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout repo
         uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GH_TOKEN }}
 
-      - name: Fetch JSON from Google Apps Script
+      - name: Fetch data from Google Apps Script
         run: |
-          curl -s "https://script.google.com/macros/s/AKfycbyDYcRc67iGbVU_jYfl5iEwpemWUy2UvMOWlHAvmKc5DTj51ThpeHLce_uo748cSOSKoA/exec" -o data.json
+          curl -s "https://script.google.com/macros/s/AKfycbDYcRc67iGbVU_jYfL5iEwpemWUy2UvM0WlHAvmKc5DTj51ThpeHLce_uo748cSOSKoA/exec" -o data.json
 
-      - name: Commit updated data.json
+      - name: Commit and push
         run: |
           git config user.name "Impact Meter Bot"
-          git config user.email "noreply@github.com"
+          git config user.email "bot@impactmeter.local"
+
           git add data.json
           git commit -m "Auto-update meter data" || echo "No changes to commit"
-          git push
 
-        env:
-          GITHUB_TOKEN: ${{ secrets.IMPACT_METER_TOKEN }}
+          git push https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/timmybomb/impact-meter.git
