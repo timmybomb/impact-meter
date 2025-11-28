@@ -23,8 +23,8 @@ function initImpactMeter() {
   card.style.background = "#ffffff";
   card.style.borderRadius = "12px";
   card.style.boxShadow = "0 4px 14px rgba(0,0,0,0.12)";
-  card.style.fontFamily = "system-ui, sans-serif";
-  card.style.color = "#073D7F";
+  card.style.fontFamily = "'Poppins', system-ui, sans-serif"; // Final brand font
+  card.style.color = "#073D7F"; // Impact Nations deep blue
   card.style.display = "flex";
   card.style.flexDirection = "column";
   card.style.gap = "16px";
@@ -37,10 +37,11 @@ function initImpactMeter() {
     heading.style.fontWeight = "700";
     heading.style.textAlign = "center";
     heading.style.color = "#073D7F";
+    heading.style.letterSpacing = "0.3px";
     card.appendChild(heading);
   }
 
-  // === LABEL (ABOVE METER) ===
+  // === LABEL above the bar ===
   const label = document.createElement("div");
   label.style.fontSize = "18px";
   label.style.textAlign = "center";
@@ -58,7 +59,7 @@ function initImpactMeter() {
   bar.style.width = "100%";
   bar.style.height = "20px";
   bar.style.borderRadius = "10px";
-  bar.style.background = "#E5E9EF"; // subtle grey/blue
+  bar.style.background = "#E5E9EF"; // soft grey/blue
   bar.style.overflow = "hidden";
   bar.style.position = "relative";
 
@@ -66,19 +67,19 @@ function initImpactMeter() {
   const fill = document.createElement("div");
   fill.style.height = "100%";
   fill.style.width = "0%";
-  fill.style.background = "#A71F24"; // Impact Nations red
+  fill.style.background = "#A71F24"; // Impact Nations brand red
   fill.style.borderRadius = "10px";
   fill.style.transition = "width 0.8s ease-out";
+  fill.style.boxShadow = "inset 0 0 3px rgba(0,0,0,0.25)";
 
-  // Append fill → bar → card
   bar.appendChild(fill);
   card.appendChild(bar);
 
-  // === Append card to page ===
+  // === Insert into page ===
   container.innerHTML = "";
   container.appendChild(card);
 
-  // Animate fill AFTER mount
+  // Animate after DOM insert
   setTimeout(() => {
     fill.style.width = pct + "%";
   }, 50);
